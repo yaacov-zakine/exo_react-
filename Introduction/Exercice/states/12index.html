@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Props – ProductCard</title>
+
+    <!-- React, ReactDOM et Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f8f8f8;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 12px;
+            text-align: center;
+            width: 180px;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+        }
+
+        img {
+            border-radius: 6px;
+        }
+
+        .onsale {
+            color: green;
+            font-weight: bold;
+        }
+
+        .outofstock {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+  <h1>Compteur auto</h1>
+<div id="root"></div>
+
+<script type="text/babel">
+
+function App() {
+  const [count, setCount] = React.useState(0);
+
+  // Lance le compteur automatique
+  setTimeout(() => {
+    setCount(count + 10);
+  }, 1000);
+
+  return (
+    <div>
+      <p>Valeur actuelle : {count}</p>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+
+</script>
+
+      
+</body>
+
+</html>

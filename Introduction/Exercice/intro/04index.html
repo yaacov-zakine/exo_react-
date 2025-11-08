@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React sans JSX</title>
+    <style>
+        .title {
+            color: orange;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <!-- React et ReactDOM via CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        const STUDENTS = ["Alan", "Alice", "Sophie"];
+
+        function App(props) {
+
+            console.log(props) // récupération des props 
+
+            // les parenthèses forcent le retour des valeurs dans le return
+            return (
+                <ul>
+                    <h1>{props.title}</h1>
+                    <h2>Nombre d'étudiant: {props.counter} </h2>
+                    {props.students.map((student, index) => {
+
+                        return (
+                            <li key={index}>{student}</li>
+                        )
+                    })}
+                </ul>
+            )
+
+        }
+
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<App
+            students={STUDENTS}
+            counter={STUDENTS.length}
+            title="HETIC"
+        />);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    // <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercice – ProductCard</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <!-- React et ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      // Composant ProductCard
+      function ProductCard({ name, price, imageUrl, inStock }) {
+        return (
+          <div>
+            <img src={imageUrl} alt={name} width="80" />
+            <h2>{name}</h2>
+
+            {inStock ? (
+              <p>
+                Prix : {price} €
+                {price < 20 && <span> — On Sale!</span>}
+              </p>
+            ) : (
+              <p>Out of stock</p>
+            )}
+          </div>
+        );
+      }
+
+      // Composant App
+      function App() {
+        return (
+          <div>
+            <ProductCard
+              name="Chien"
+              price={200}
+              imageUrl="https://picsum.photos/id/237/200/300"
+              inStock={true}
+            />
+
+            <ProductCard
+              name="Chat"
+              price={15}
+              imageUrl="https://picsum.photos/id/1025/200/300"
+              inStock={true}
+            />
+
+            <ProductCard
+              name="Lapin"
+              price={50}
+              imageUrl="https://picsum.photos/id/1074/200/300"
+              inStock={false}
+            />
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
