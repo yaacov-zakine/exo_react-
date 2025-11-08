@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DM React – useState & useEffect (commentaires perso)</title>
+
+  <!-- React, ReactDOM et Babel (UMD) -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Tailwind pour la mise en page (pas obligatoire, mais c'est propre) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-6">
+  <h1 class="text-2xl font-semibold mb-4">DM React – useState & useEffect (version commentée)</h1>
+  <div id="root" class="w-full max-w-xl"></div>
+
+  <script type="text/babel">
+    
+    // Q1 — Rôle de useState dans Counter et App ?
+    // R : useState crée un état local et fournit un setter qui déclenche un nouveau rendu.
+    // - dans Counter : count = nombre affiché (+1 au clic)
+    // - dans App : status = booléen qui décide si <Counter /> est affiché ou non
+
+    const { useState, useEffect } = React;
+
+    function Counter() {
+      // État local du compteur. 0 au départ, puis on incrémente.
+      const [count, setCount] = useState(0);
+
+      // Q2 — À quoi sert useEffect ici ?
+      // R : il s’exécute après chaque rendu (pas de tableau de dépendances),
+      // log la valeur courante, et retourne un "cleanup" appelé avant le prochain effet et au démontage.
+      useEffect(() => {
+        console.log("MONTAGE / MISE À JOUR :", count);
+
+        // Q3 — Quand le nettoyage (cleanup) est appelé ?
+        // R : juste avant que l’effet soit rejoué (donc avant un nouveau rendu qui suit une maj d’état),
+        // et au moment où le composant est retiré du DOM (démontage).
+        // NB : la closure capture la valeur de count du rendu courant → le log reflète l’ancienne valeur.
+        return () => {
+          console.log("NETTOYAGE :", count);
+        };
+      });
+
+      return (
+        <React.Fragment>
+          <p className="text-lg">Compteur : {count}</p>
+          <button
+            className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded mt-2"
+            onClick={() => {
+              // Incrémente et provoque un nouveau rendu → l’effet rejouera
+              setCount(count + 1);
+            }}
+          >
+            +1
+          </button>
+        </React.Fragment>
+      );
+    }
+
+    function App() {
+      // État qui pilote l’affichage de <Counter />
+      const [status, setStatus] = useState(true);
+
+      // Q4 — Que se passe-t-il quand on clique sur "Changer le statut" ?
+      // R : on inverse status.
+      // - status = false → Counter est démonté → React appelle le cleanup de son effet.
+      // - status = true → Counter est remonté “tout neuf” → count repart à 0.
+      return (
+        <div className="bg-slate-800 p-4 rounded-xl shadow-lg">
+          <button
+            className="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded mb-4"
+            onClick={() => setStatus(!status)}
+          >
+            Changer le statut
+          </button>
+
+          {/* Si status est vrai, on rend Counter. Sinon, rien (et donc démontage si ça vient de passer à false). */}
+          {status && <Counter />}
+        </div>
+      );
+    }
+
+    // Q5 — Différence montage / mise à jour / démontage du composant Counter ?
+    // R :
+    // - Montage : premier rendu → l’effet s’exécute (après le paint) → log "MONTAGE / MISE À JOUR : 0".
+    // - Mise à jour : avant de rejouer l’effet, React appelle le cleanup précédent → puis l’effet rejoue avec la nouvelle valeur.
+    // - Démontage : React appelle un dernier cleanup, puis enlève le composant.
+    //
+   
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

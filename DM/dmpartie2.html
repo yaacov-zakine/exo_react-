@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DM React – useReducer (compteur)</title>
+
+  <!-- React, ReactDOM, Babel (UMD) -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Tailwind (juste pour le style) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-6">
+  <div id="root" class="w-full max-w-md"></div>
+
+  <script type="text/babel">
+    // =============================================
+    // Partie 2 – Exemple d'utilisation de useReducer
+    
+    const { useReducer } = React;
+
+    // Reducer très simple pour un compteur
+    function reducer(state, action) {
+      switch (action.type) {
+        case "increment":
+          return { count: state.count + 1 };
+        case "decrement":
+          return { count: state.count - 1 };
+        case "reset":
+          return { count: 0 };
+        default:
+          // par défaut, on renvoie l'état tel quel
+          return state;
+      }
+    }
+
+    function CounterReducer() {
+     
+     const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+      return (
+        <div className="p-6 bg-slate-800 rounded-xl shadow-lg text-center space-y-4">
+          <h1 className="text-xl font-semibold">Compteur avec useReducer</h1>
+          <p className="text-lg">Valeur actuelle : <span className="font-mono">{state.count}</span></p>
+
+          <div className="flex items-center justify-center gap-2">
+            <button
+              className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded"
+              onClick={() => dispatch({ type: "decrement" })}
+            >
+              -1
+            </button>
+
+            <button
+              className="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+              onClick={() => dispatch({ type: "reset" })}
+            >
+              Reset
+            </button>
+
+            <button
+              className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded"
+              onClick={() => dispatch({ type: "increment" })}
+            >
+              +1
+            </button>
+          </div>
+
+        </div>
+      );
+    }
+
+    // Render
+    ReactDOM.createRoot(document.getElementById("root")).render(<CounterReducer />);
+  </script>
+</body>
+</html>
