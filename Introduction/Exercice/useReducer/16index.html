@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculatrice React (useReducer)</title>
+
+    <!-- React + ReactDOM + Babel -->
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      // Reducer : gère les actions sur la calculatrice
+      function reducer(state, action) {
+        switch (action.type) {
+          case "setNombreA":
+            return { ...state, nombreA: action.value };
+          case "setNombreB":
+            return { ...state, nombreB: action.value };
+          case "calculer":
+            return { ...state, resultat: Number(state.nombreA) + Number(state.nombreB) };
+          case "reset":
+            return { nombreA: "", nombreB: "", resultat: null };
+          default:
+            return state;
+        }
+      }
+
+      function Calculatrice() {
+        const [state, dispatch] = React.useReducer(reducer, {
+          nombreA: "",
+          nombreB: "",
+          resultat: null,
+        });
+
+        return (
+          <div>
+            <h1>Calculatrice d'addition</h1>
+            <input
+              type="number"
+              placeholder="Nombre A"
+              value={state.nombreA}
+              onChange={(e) =>
+                dispatch({ type: "setNombreA", value: e.target.value })
+              }
+            />
+            <span> + </span>
+            <input
+              type="number"
+              placeholder="Nombre B"
+              value={state.nombreB}
+              onChange={(e) =>
+                dispatch({ type: "setNombreB", value: e.target.value })
+              }
+            />
+            <br />
+            <button onClick={() => dispatch({ type: "calculer" })}>
+              Calculer
+            </button>
+            <button onClick={() => dispatch({ type: "reset" })}>Reset</button>
+            {state.resultat !== null && <h2>Résultat : {state.resultat}</h2>}
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<Calculatrice />);
+    </script>
+  </body>
+</html>
