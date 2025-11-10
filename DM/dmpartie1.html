@@ -33,14 +33,14 @@
 
       // Q2 — À quoi sert useEffect ici ?
       // R : il s’exécute après chaque rendu (pas de tableau de dépendances),
-      // log la valeur courante, et retourne un "cleanup" appelé avant le prochain effet et au démontage.
+
       useEffect(() => {
         console.log("MONTAGE / MISE À JOUR :", count);
 
         // Q3 — Quand le nettoyage (cleanup) est appelé ?
         // R : juste avant que l’effet soit rejoué (donc avant un nouveau rendu qui suit une maj d’état),
         // et au moment où le composant est retiré du DOM (démontage).
-        // NB : la closure capture la valeur de count du rendu courant → le log reflète l’ancienne valeur.
+        //  la closure capture la valeur de count du rendu courant → le log reflète l’ancienne valeur.
         return () => {
           console.log("NETTOYAGE :", count);
         };
