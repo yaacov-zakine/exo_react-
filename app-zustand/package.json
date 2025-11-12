@@ -1,5 +1,5 @@
 {
-  "name": "machine_ruband",
+  "name": "app-zustend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,15 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/react-router": "^1.135.2",
-    "@tanstack/router-devtools": "^1.135.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
-    "@tanstack/router-plugin": "^1.135.2",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.0",
