@@ -1,10 +1,23 @@
 .app {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
   padding: 3rem 1.5rem;
   color: #f8fafc;
+}
+
+.app__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: min(1100px, 100%);
+}
+
+@media (min-width: 960px) {
+  .app__grid {
+    flex-direction: row;
+  }
 }
 
 .machine {
@@ -19,6 +32,8 @@
     0 32px 60px -34px rgba(15, 23, 42, 0.95),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   transition: transform 200ms ease, box-shadow 200ms ease;
+  flex: 1 1 50%;
+  width: 100%;
 }
 
 .machine:hover {

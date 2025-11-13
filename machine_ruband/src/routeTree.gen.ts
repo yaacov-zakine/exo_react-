@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as CategoryRouteImport } from './routes/category'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PokemoneNameRouteImport } from './routes/pokemone.$name'
 
 const CategoryRoute = CategoryRouteImport.update({
   id: '/category',
@@ -28,35 +29,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PokemoneNameRoute = PokemoneNameRouteImport.update({
+  id: '/pokemone/$name',
+  path: '/pokemone/$name',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/category': typeof CategoryRoute
+  '/pokemone/$name': typeof PokemoneNameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/category': typeof CategoryRoute
+  '/pokemone/$name': typeof PokemoneNameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/category': typeof CategoryRoute
+  '/pokemone/$name': typeof PokemoneNameRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/category'
+  fullPaths: '/' | '/about' | '/category' | '/pokemone/$name'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/category'
-  id: '__root__' | '/' | '/about' | '/category'
+  to: '/' | '/about' | '/category' | '/pokemone/$name'
+  id: '__root__' | '/' | '/about' | '/category' | '/pokemone/$name'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   CategoryRoute: typeof CategoryRoute
+  PokemoneNameRoute: typeof PokemoneNameRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pokemone/$name': {
+      id: '/pokemone/$name'
+      path: '/pokemone/$name'
+      fullPath: '/pokemone/$name'
+      preLoaderRoute: typeof PokemoneNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CategoryRoute: CategoryRoute,
+  PokemoneNameRoute: PokemoneNameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
