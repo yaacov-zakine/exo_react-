@@ -29,10 +29,21 @@ function ProductList({ title, limit }) {
                   {product.description}
                 </p>
               </div>
-              {product.badge ? (
-                <span className="product-card__badge">{product.badge}</span>
-              ) : null}
+              <span className="product-card__category">{product.category}</span>
             </div>
+
+            <div className="product-card__meta">
+              <span className="product-card__rating">
+                ⭐ {product.rating.toFixed(1)}
+              </span>
+              <span className="product-card__stock">
+                {product.stock} en stock
+              </span>
+              <span className="product-card__origin">
+                Origine : {product.origin}
+              </span>
+            </div>
+
             <p className="product-card__price">{currency(product.price)}</p>
             <button
               className="btn btn--primary"

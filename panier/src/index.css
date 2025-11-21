@@ -123,6 +123,41 @@ body {
   gap: 1.5rem;
 }
 
+.page--narrow {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.policy-header h1 {
+  margin: 0.5rem 0 0;
+}
+
+.policy-header__eyebrow {
+  margin: 0;
+  letter-spacing: 0.3em;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.policy-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.policy-section h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.policy-section ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
 .panel {
   border-radius: 1.25rem;
   padding: 1.5rem;
@@ -224,6 +259,40 @@ body {
   font-weight: 700;
   border-radius: 999px;
   padding: 0.2rem 0.75rem;
+}
+
+.product-card__category {
+  align-self: flex-start;
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+  background: rgba(76, 76, 255, 0.12);
+  color: #4c4cff;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+.product-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  font-size: 0.85rem;
+  color: rgba(15, 16, 21, 0.75);
+}
+
+:root[data-theme="dark"] .product-card__meta {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.product-card__rating {
+  font-weight: 600;
+}
+
+.product-card__stock {
+  opacity: 0.85;
+}
+
+.product-card__origin {
+  font-style: italic;
 }
 
 .product-card__price {

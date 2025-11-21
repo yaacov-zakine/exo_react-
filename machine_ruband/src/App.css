@@ -1,23 +1,10 @@
 .app {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   min-height: 100vh;
   padding: 3rem 1.5rem;
   color: #f8fafc;
-}
-
-.app__grid {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: min(1100px, 100%);
-}
-
-@media (min-width: 960px) {
-  .app__grid {
-    flex-direction: row;
-  }
 }
 
 .machine {

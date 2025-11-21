@@ -18,6 +18,9 @@ const RootLayout = () => (
         <Link to="/category" activeProps={{ className: "active" }}>
           Scénarios
         </Link>
+        <Link to="/pokemon" activeProps={{ className: "active" }}>
+          Pokémon
+        </Link>
       </nav>
     </header>
     <main>

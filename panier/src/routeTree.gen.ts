@@ -9,9 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProduitRouteImport } from './routes/produit'
+import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as CataloguesRouteImport } from './routes/catalogues'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ProduitRoute = ProduitRouteImport.update({
+  id: '/produit',
+  path: '/produit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
+  id: '/confidentialite',
+  path: '/confidentialite',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CataloguesRoute = CataloguesRouteImport.update({
   id: '/catalogues',
   path: '/catalogues',
@@ -26,31 +38,53 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/catalogues': typeof CataloguesRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/produit': typeof ProduitRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/catalogues': typeof CataloguesRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/produit': typeof ProduitRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/catalogues': typeof CataloguesRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/produit': typeof ProduitRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/catalogues'
+  fullPaths: '/' | '/catalogues' | '/confidentialite' | '/produit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/catalogues'
-  id: '__root__' | '/' | '/catalogues'
+  to: '/' | '/catalogues' | '/confidentialite' | '/produit'
+  id: '__root__' | '/' | '/catalogues' | '/confidentialite' | '/produit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CataloguesRoute: typeof CataloguesRoute
+  ConfidentialiteRoute: typeof ConfidentialiteRoute
+  ProduitRoute: typeof ProduitRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/produit': {
+      id: '/produit'
+      path: '/produit'
+      fullPath: '/produit'
+      preLoaderRoute: typeof ProduitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confidentialite': {
+      id: '/confidentialite'
+      path: '/confidentialite'
+      fullPath: '/confidentialite'
+      preLoaderRoute: typeof ConfidentialiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/catalogues': {
       id: '/catalogues'
       path: '/catalogues'
@@ -71,6 +105,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CataloguesRoute: CataloguesRoute,
+  ConfidentialiteRoute: ConfidentialiteRoute,
+  ProduitRoute: ProduitRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

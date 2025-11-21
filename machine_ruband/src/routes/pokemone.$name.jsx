@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PokemonList } from "../components/PokemonList";
+import { PokemonDetail } from "../components/PokemonDetail";
 
 export const Route = createFileRoute("/pokemone/$name")({
   component: RouteComponent,
@@ -18,6 +19,7 @@ function RouteComponent() {
             Aperçu des 20 premiers résultats fournis par la PokéAPI
           </p>
         </header>
+        <PokemonDetail name={name} />
         <PokemonList />
       </section>
     </div>

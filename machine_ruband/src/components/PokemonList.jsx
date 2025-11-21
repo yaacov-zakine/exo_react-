@@ -1,58 +1,74 @@
-import { useQuery } from "@tanstack/react-query";
-import "./PokemonList.css";
+import { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import { Link } from "@tanstack/react-router";
+import "../PokemonList.css";
 
-const fetchPokemons = async ({ signal }) => {
-  const response = await fetch(
-    "https://pokeapi.co/api/v2/pokemon?limit=20",
-    { signal }
-  );
-
-  if (!response.ok) {
-    throw new Error("Impossible de récupérer les Pokémon");
-  }
-
-  return response.json();
-};
+const POKEMON_ENDPOINT = "https://pokeapi.co/api/v2/pokemon?limit=20";
 
 export function PokemonList() {
-  const {
-    data,
-    isPending,
-    isError,
-    refetch,
-    isFetching,
-  } = useQuery({
-    queryKey: ["pokemon", 20],
-    queryFn: fetchPokemons,
-  });
+  const [pokemons, setPokemons] = useState([]);
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState(null);
+  const [reloadKey, setReloadKey] = useState(0);
+
+  const fetchPokemons = useCallback(async (signal) => {
+    setStatus("loading");
+    setError(null);
+
+    try {
+      const { data } = await axios.get(POKEMON_ENDPOINT, { signal });
+      if (!signal.aborted) {
+        setPokemons(data.results ?? []);
+        setStatus("success");
+      }
+    } catch (err) {
+      if (err.name === "CanceledError" || err.code === "ERR_CANCELED") {
+        return;
+      }
+      setError(err);
+      setStatus("error");
+    }
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetchPokemons(controller.signal);
+    return () => controller.abort();
+  }, [fetchPokemons, reloadKey]);
 
   const handleReload = () => {
-    void refetch();
+    setReloadKey((key) => key + 1);
   };
 
   let content = null;
 
-  if (isPending) {
-    content = (
-      <p className="pokemon-list__status">Chargement...</p>
-    );
-  } else if (isError) {
+  if (status === "loading" || status === "idle") {
+    content = <p className="pokemon-list__status">Chargement...</p>;
+  } else if (status === "error") {
     content = (
       <p className="pokemon-list__status pokemon-list__status--error">
-        Erreur...
+        {error?.message ?? "Erreur..."}
       </p>
     );
   } else {
     content = (
       <ul className="pokemon-list__items">
-        {data.results.map((pokemon) => (
+        {pokemons.map((pokemon) => (
           <li className="pokemon-list__item" key={pokemon.name}>
-            {pokemon.name}
+            <Link
+              to="/pokemone/$name"
+              params={{ name: pokemon.name }}
+              className="pokemon-list__link"
+            >
+              {pokemon.name}
+            </Link>
           </li>
         ))}
       </ul>
     );
   }
+
+  const isFetching = status === "loading";
 
   return (
     <div className="pokemon-list">

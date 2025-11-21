@@ -16,6 +16,12 @@ const RootComponent = () => (
         <Link to="/catalogues" activeProps={{ className: "active" }}>
           Catalogues
         </Link>
+        <Link to="/confidentialite" activeProps={{ className: "active" }}>
+          Confidentialité
+        </Link>
+        <Link to="/produit" activeProps={{ className: "active" }}>
+          Produit
+        </Link>
       </nav>
       <ThemeToggle />
     </header>

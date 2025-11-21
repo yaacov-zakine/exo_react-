@@ -44,6 +44,7 @@ function Cart() {
               <p className="cart__price">{currency(item.price)}</p>
             </div>
             <div className="cart__actions">
+
               <button
                 className="btn btn--ghost"
                 onClick={() => removeFromCart(item.id)}
@@ -59,6 +60,7 @@ function Cart() {
               >
                 +
               </button>
+              
               <span className="cart__line-total">
                 {currency(item.lineTotal)}
               </span>
